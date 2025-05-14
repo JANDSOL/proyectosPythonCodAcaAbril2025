@@ -16,6 +16,7 @@ def add_contacts(cedula,nombre,apellido,celular):
         }
     contacts.append(contacts_nuevos)
     print(f"Contacto agregado exitosamente: {contacts_nuevos}")
+    return (True, "Completado")
 
 def get_contact(cedula):
     for contacto in contacts:
@@ -27,6 +28,7 @@ def get_contact(cedula):
             print(f"Celular: {contacto['celular']}")
             return (True, "Completado")
     print("No se encontró un contacto con esa cédula.")
+    return (True, "Completado")  
 
 def update_contact(cedula,nombre=None,celular=None,apellido=None):
     for contacto in contacts:
@@ -41,6 +43,7 @@ def update_contact(cedula,nombre=None,celular=None,apellido=None):
             print(f"Celular: {contacto['celular']}")
             return (True, "Completado")
     print("No se encontro un contacto con esa cédula")
+    return (True, "Completado")
 
 def delete_contact(cedula):
     for contacto in contacts:
@@ -48,3 +51,5 @@ def delete_contact(cedula):
             contacts.remove(contacto)
             return
     print("No se encontro un contacto con esa cédula")
+    tupla = (True, "Completado")
+    return (True, "Completado")
