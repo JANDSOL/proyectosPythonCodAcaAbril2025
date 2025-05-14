@@ -1,4 +1,5 @@
-from models import contacts
+from gestor_contactos.models import contacts
+from utils.datetime_utils import get_timestamp
 # from utils import datetime_utils
 
 def add_contacts(cedula,nombre,apellido,celular):
@@ -10,7 +11,8 @@ def add_contacts(cedula,nombre,apellido,celular):
         'cedula':cedula,
         'nombre':nombre,
         'apellido':apellido,
-        'celular':celular
+        'celular':celular,
+        'fecha_creacion':get_timestamp(),
         }
     contacts.append(contacts_nuevos)
     print(f"Contacto agregado exitosamente: {contacts_nuevos}")

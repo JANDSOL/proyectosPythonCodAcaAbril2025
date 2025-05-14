@@ -1,5 +1,5 @@
-from models import get_all, exists
-from crud import add_contacts,get_contact,delete_contact,update_contact
+from gestor_contactos.models import get_all, exists
+from gestor_contactos.crud import add_contacts,get_contact,delete_contact,update_contact
 
 def show_menu():
     print("1. Añadir contacto")
@@ -38,4 +38,3 @@ def run():
             break
         else:
             print("Opcion invalida intente de nuevo")
-#run()
