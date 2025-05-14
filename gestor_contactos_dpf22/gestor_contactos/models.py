@@ -2,16 +2,16 @@
 contacts=[
     
 ]
-def exists(cedula):
+def exists(cedula)->tuple[bool,str]:
     for contacto in contacts:
         if contacto['cedula'] == cedula:
-            return True
-    return False
+            return True, "El contacto existe"
+    return False, "El contacto no existe"
     
-def get_all():
+def get_all()->tuple[bool,str]:
     for contacto in contacts:
         print('=============Contacto================')
         for clave,valor in contacto.items():
             print (f"{clave}:{valor}")
-            return True, "Completado"
-    return False, "No se encontraron contactos"
+        return True, "Contacto Mostrado"
+    return False,"No hay contactos"

@@ -18,21 +18,27 @@ def run():
             nombre=input("Ingrese el nombre del contacto: ")
             apellido=input("Ingrese el apellido del contacto: ")
             celular=input("Ingrese el número celular del contacto: ")
-            add_contacts(cedula,nombre,apellido,celular)
+            exito,mensaje=add_contacts(cedula,nombre,apellido,celular)
+            print(exito,mensaje)
         elif choice == '2' or choice == "mostrar informacion del contacto":
             cedula=input("Ingrese la cédula del contacto: ")
-            get_contact(cedula)
+            exito,mensaje=get_contact(cedula)
+            print(exito,mensaje)
         elif choice == '3' or choice == "eliminar contacto":
             cedula=input("Ingrese la cédula del contacto: ")
-            delete_contact(cedula)
+            exito,mensaje=delete_contact(cedula)
+            print(exito,mensaje)
         elif choice == '4' or choice == "ver todos los contactos":
-            get_all()
+            exito,mensaje=get_all()
+            print(exito,mensaje)
         elif choice == '5' or choice == "comprobar si el contacto existe":
             cedula=input("Ingrese la cédula del contacto: ")
-            print(exists(cedula))
+            exito,mensaje=(exists(cedula))
+            print(exito,mensaje)
         elif choice == '6' or choice == "actualizar informacion":
             cedula=input("Ingrese la cédula del contacto: ")
-            update_contact(cedula)
+            exito,mensaje=update_contact(cedula)
+            print(exito,mensaje)
         elif choice == '7' or choice == "salir":
             print("Has salido del menu")
             break

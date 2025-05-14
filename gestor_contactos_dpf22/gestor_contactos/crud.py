@@ -2,11 +2,11 @@ from gestor_contactos.models import contacts
 from utils.datetime_utils import get_timestamp
 # from utils import datetime_utils
 
-def add_contacts(cedula,nombre,apellido,celular):
+def add_contacts(cedula,nombre,apellido,celular)->tuple[bool,str]:
     for contacto in contacts:
         if contacto['cedula'] == cedula:
-            print("Ya existe un contacto con esa cédula.")
-            return
+            return False, "Ya existe un contacto con esa cédula."
+        
     contacts_nuevos={
         'cedula':cedula,
         'nombre':nombre,
@@ -14,11 +14,12 @@ def add_contacts(cedula,nombre,apellido,celular):
         'celular':celular,
         'fecha_creacion':get_timestamp(),
         }
+    
     contacts.append(contacts_nuevos)
-    print(f"Contacto agregado exitosamente: {contacts_nuevos}")
-    return (True, "Completado")
+    return True, f"Contacto agregado exitosamente: {contacts_nuevos}"
+    
 
-def get_contact(cedula):
+def get_contact(cedula)->tuple[bool,str]:
     for contacto in contacts:
         if contacto['cedula'] == cedula:
             print("Información del contacto:")
@@ -26,11 +27,11 @@ def get_contact(cedula):
             print(f"Nombre: {contacto['nombre']}")
             print(f"Apellido: {contacto['apellido']}")
             print(f"Celular: {contacto['celular']}")
-            return (True, "Completado")
-    print("No se encontró un contacto con esa cédula.")
-    return (True, "Completado")  
+            return True, "Completado"
+    return False,f"No se encontró un contacto con esa cédula."
 
-def update_contact(cedula,nombre=None,celular=None,apellido=None):
+
+def update_contact(cedula,nombre=None,celular=None,apellido=None)->tuple[bool,str]:
     for contacto in contacts:
         if contacto['cedula'] == cedula:
             nuevo_valor=input("Ingrese el nuevo valor: ")
@@ -41,15 +42,13 @@ def update_contact(cedula,nombre=None,celular=None,apellido=None):
             print(f"Nombre: {contacto['nombre']}")
             print(f"Apellido: {contacto['apellido']}")
             print(f"Celular: {contacto['celular']}")
-            return (True, "Completado")
-    print("No se encontro un contacto con esa cédula")
-    return (True, "Completado")
+            return True, "Completado"
+    return False, "No se encontro un contacto con esa cédula"
 
-def delete_contact(cedula):
+def delete_contact(cedula) ->tuple[bool,str]:
     for contacto in contacts:
         if contacto['cedula'] == cedula:
             contacts.remove(contacto)
-            return
-    print("No se encontro un contacto con esa cédula")
-    tupla = (True, "Completado")
-    return (True, "Completado")
+            return True, "Contacto Eliminado"
+    return False,"No se encontro un contacto con esa cédula"
+
