@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./python_intermedio/gestor_contacto_JOSESIAVICHAY094335764/gestor_contacto_JOSESIAVICHAY094335764/gestor_contacto_/gestor_contactos"
+    ]
+}
