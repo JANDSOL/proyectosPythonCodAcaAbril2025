@@ -7,3 +7,6 @@ class Producto:
         self.nombre = nombre
         self.precio = precio
         self.stock = stock
+        
+    def __repr__(self):
+        return f"<Producto id={self.id}, nombre={self.nombre}, precio={self.precio}, stock={self.stock}>"

@@ -1,47 +1,59 @@
+import logging
 from models import Producto
-from logging_config import setup_logger
 
-logger = setup_logger()
+logger = logging.getLogger(__name__)
 
 class ProductManager:
     def __init__(self):
-        self.productos = {}
+        self.productos = []
 
     def create(self, nombre, precio, stock):
         producto = Producto(nombre, precio, stock)
-        self.productos[producto.id] = producto
-        logger.info(f"Producto creado: {vars(producto)}")
-        return producto.id
+        self.productos.append(producto)
+        logger.info(f"Producto creado: {producto}")
+        return producto
 
-    def read(self, id_):
-        producto = self.productos.get(id_)
-        if producto:
-            return vars(producto)
-        logger.error(f"Producto no encontrado: ID {id_}")
+    def read(self, producto_id):
+        for p in self.productos:
+            if p.id == producto_id:
+                logger.info(f"Producto consultado: {p}")
+                return p
+        logger.warning(f"Producto con ID {producto_id} no encontrado.")
         return None
 
-    def update(self, id_, nombre=None, precio=None, stock=None):
-        producto = self.productos.get(id_)
-        if not producto:
-            logger.error(f"No se puede actualizar, producto no encontrado: ID {id_}")
-            return False
-        if nombre: producto.nombre = nombre
-        if precio: producto.precio = precio
-        if stock: producto.stock = stock
-        logger.info(f"Producto actualizado: {vars(producto)}")
-        return True
+    def update(self, producto_id, nombre=None, precio=None, stock=None):
+        producto = self.read(producto_id)
+        if producto:
+            if nombre: producto.nombre = nombre
+            if precio: producto.precio = precio
+            if stock: producto.stock = stock
+            logger.info(f"Producto actualizado: {producto}")
+            return producto
+        logger.error(f"No se pudo actualizar el producto con ID {producto_id}")
+        return None
 
-    def bulk_update(self, updates):
-        for id_, cambios in updates.items():
-            self.update(id_, **cambios)
+    def bulk_update(self, ids, nombre=None, precio=None, stock=None):
+        actualizados = []
+        for pid in ids:
+            prod = self.update(pid, nombre, precio, stock)
+            if prod:
+                actualizados.append(prod)
+        logger.info(f"Productos actualizados masivamente: {actualizados}")
+        return actualizados
 
-    def delete(self, id_):
-        if self.productos.pop(id_, None):
-            logger.info(f"Producto eliminado: ID {id_}")
+    def delete(self, producto_id):
+        producto = self.read(producto_id)
+        if producto:
+            self.productos.remove(producto)
+            logger.info(f"Producto eliminado: {producto}")
             return True
-        logger.error(f"No se puede eliminar, producto no encontrado: ID {id_}")
+        logger.error(f"No se pudo eliminar el producto con ID {producto_id}")
         return False
 
     def bulk_delete(self, ids):
-        for id_ in ids:
-            self.delete(id_)
+        eliminados = []
+        for pid in ids:
+            if self.delete(pid):
+                eliminados.append(pid)
+        logger.info(f"Productos eliminados masivamente: {eliminados}")
+        return eliminados
